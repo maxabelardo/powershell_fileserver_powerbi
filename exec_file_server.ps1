@@ -23,7 +23,7 @@ $SQLDatabase = "FileServer"
 #==============================================================================================================================#
 
 #Aviso na tela:
-Write-Output "Iniciando exploração dos objetos"
+Write-Output "Iniciando exploração em: " $dirStart
 
 <#
     #Limpa a tabela de Stage no servidor.
