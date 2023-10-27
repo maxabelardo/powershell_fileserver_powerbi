@@ -34,7 +34,7 @@ function Process-Folders($path, $level) {
     $folders = Get-ChildItem -Path $path | Where-Object { $_.PSIsContainer }
 
 
-        if ($folders.Count -gt 5) {
+        if ($folders.Count -gt 10) {
             # Se houver mais de 5 subpastas, criar trabalhos em paralelo
             $folders | ForEach-Object {
 

@@ -76,7 +76,7 @@ ForEach( $lp in $listPermission){
 
 
     #Imprime na tela o progresso da análise.
-   "Progresso: "+ $vt+"% concluido, foram analisados " + $pg +" de "+$ct
+   "PREMISSÕES - Progresso: "+ $vt+"% concluido, foram analisados " + $pg +" de "+$ct
 
     #Contado: cada volta do Loop é somado mais um na variável.
     $pg = $pg + 1 

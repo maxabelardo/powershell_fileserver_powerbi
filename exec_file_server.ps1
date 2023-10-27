@@ -129,7 +129,7 @@ $vt = 0
 
 
     #Imprime na tela o progresso da análise.
-   "Progresso: "+ $vt+"% concluido, foram analisados " + $pg +" de "+$ct
+   "ARQUIVOS -  Progresso: "+ $vt+"% concluido, foram analisados " + $pg +" de "+$ct
 
     #Contado: cada volta do Loop é somado mais um na variável.
     $pg = $pg + 1 
