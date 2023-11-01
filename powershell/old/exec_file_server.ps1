@@ -23,7 +23,7 @@ $SQLDatabase = "FileServer"
 #==============================================================================================================================#
 
 #Aviso na tela:
-Write-Output "Iniciando exploração em: " $dirStart
+Write-Output "Iniciando exploração dos objetos"
 
 <#
     #Limpa a tabela de Stage no servidor.
@@ -129,7 +129,7 @@ $vt = 0
 
 
     #Imprime na tela o progresso da análise.
-   "ARQUIVOS -  Progresso: "+ $vt+"% concluido, foram analisados " + $pg +" de "+$ct
+   "Progresso: "+ $vt+"% concluido, foram analisados " + $pg +" de "+$ct
 
     #Contado: cada volta do Loop é somado mais um na variável.
     $pg = $pg + 1 

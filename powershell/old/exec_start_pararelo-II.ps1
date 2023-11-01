@@ -10,53 +10,33 @@ function Execute-CommandInParallel($command) {
     } -ArgumentList $command
 }
 
-function Process-Sleep() {
+# Função para percorrer os níveis de pastas recursivamente
+function Process-Folders($path, $level) {
+    $folders = Get-ChildItem -Path $path | Where-Object { $_.PSIsContainer }
 
     # Recuperar o total de trabalhos em execução
     $jobsEmExecucao = Get-Job | Where-Object { $_.State -eq 'Running' }
 
     # Obter o número total de trabalhos em execução
     $totalEmExecucao = $jobsEmExecucao.Count
-    
 
         # Quando o total de jobs em paralelos alcançar 20 jobs o loop é pausado por 30 minutos.
-        if ($totalEmExecucao -ge 100) {
-            Write-Output 'Pausa na extração...' $totalEmExecucao
-            
-            Start-Sleep -Seconds 30
+        if ($totalEmExecucao -le 20) {
+            Write-Output 'Pausa na extração.'
+            Start-Sleep -Seconds 108000
         }
-}
 
-
-
-# Função para percorrer os níveis de pastas recursivamente
-function Process-Folders($path, $level) {
-    $folders = Get-ChildItem -Path $path | Where-Object { $_.PSIsContainer }
-
-
-        if ($folders.Count -gt 10) {
+        if ($folders.Count -gt 5) {
             # Se houver mais de 5 subpastas, criar trabalhos em paralelo
             $folders | ForEach-Object {
-
                 $command = "c:\temp\exec_file_server.ps1 -dirStart '$($_.FullName)' -recurse $level"
                 Execute-CommandInParallel $command
-
-                $command = "c:\temp\exec_file_server_permissoes.ps1 -dirStart '$($_.FullName)'"
-                Execute-CommandInParallel $command
-
-                Process-Sleep
             }
         } else {
             # Caso contrário, executar em série
             $folders | ForEach-Object {
-
                 $command = "c:\temp\exec_file_server.ps1 -dirStart '$($_.FullName)' -recurse $level"
                 Invoke-Expression $command
-
-                $command = "c:\temp\exec_file_server_permissoes.ps1 -dirStart '$($_.FullName)'"
-                Execute-CommandInParallel $command
-
-                Process-Sleep
             }
         }
 
