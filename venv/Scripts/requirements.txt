@@ -1,9 +1,0 @@
-cx-Oracle==8.3.0
-greenlet==3.0.1
-mysql-connector-python==8.2.0
-protobuf==4.21.12
-psycopg2==2.9.9
-pyodbc==5.0.1
-setuptools==68.2.2
-SQLAlchemy==2.0.22
-typing_extensions==4.8.0
