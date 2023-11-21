@@ -36,3 +36,11 @@ pip install mysql-connector-python
 ````
 pip freeze > requirements.txt
 ````
+
+
+### Corrigir erro de proxy quando for instalar os componentes.
+
+$env:HTTP_PROXY = "http://username:password@proxyserver:port"
+$env:HTTPS_PROXY = "http://username:password@proxyserver:port"
+
+pip install --proxy http://username:password@proxyserver:port package_name
