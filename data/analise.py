@@ -35,9 +35,9 @@ query_executor = QueryExecutor(db.connection)
 
 # Defina a consulta que você deseja executar
 query = """
-    SELECT [idSites], [Title], [dhcriacao], 
-           SUM(Storagepercentage) OVER (PARTITION BY [Title] ORDER BY [dhcriacao]) AS CrescimentoTotal
-    FROM VW_site_evolucao
+    SELECT [idSites], [Title], CONVERT(CHAR(10), [dhcriacao], 111) AS dhcriacao, 
+           SUM(StorageUsageCurrent) OVER (PARTITION BY [Title] ORDER BY CONVERT(CHAR(10), [dhcriacao], 111)) AS CrescimentoTotal
+    FROM VW_site_evolucao 
 """
 # Execute a consulta e obtenha o resultado e o status de sucesso
 result, success = query_executor.execute_query(query)
