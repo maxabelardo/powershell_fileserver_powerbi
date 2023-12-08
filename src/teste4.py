@@ -4,6 +4,8 @@ import dask
 from dask import delayed
 from dask.distributed import Client
 from math import ceil
+import pymongo
+
 
 def obter_atributos_arquivo(caminho_completo):
     try:
@@ -31,6 +33,9 @@ def processar_arquivos_pedaco(pedaco):
             # Calculando a idade do arquivo (em dias)
             now = datetime.now()
             atributos['Age'] = (now - atributos['CreationTime']).days
+            
+            # Inserir os atributos no MongoDB
+            inserir_no_mongodb(atributos)
 
             # Faça algo com os atributos, como imprimir na tela
             print(atributos)
@@ -49,8 +54,21 @@ def dividir_diretorio_em_pedacos(diretorio, tamanho_pedaco):
 
     return pedacos
 
+def inserir_no_mongodb(documento):
+    # Inserir o documento no MongoDB
+    mycol.insert_one(documento)
+
+
+
 if __name__ == '__main__':
     dh_inicio = datetime.now()
+
+    # Conectar ao servidor MongoDB
+    myclient = pymongo.MongoClient("mongodb://mongoadmin:secret@localhost:27017/")
+    # Selecionar o banco de dados e a coleção
+    mydb = myclient["file_server"]
+    mycol = mydb["files"]
+
 
     diretorio_principal = r'J:\ARQUIVOS PUBLICOS'
     tamanho_pedaco = 40  # ajuste conforme necessário

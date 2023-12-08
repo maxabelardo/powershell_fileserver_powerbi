@@ -48,6 +48,7 @@ def dividir_diretorio_em_pedacos(diretorio, tamanho_pedaco):
     pedacos = [arquivos[i * tamanho_pedaco:(i + 1) * tamanho_pedaco] for i in range(num_pedacos)]
     return pedacos
 
+
 if __name__ == '__main__':
     dh_inicio = datetime.now()
 

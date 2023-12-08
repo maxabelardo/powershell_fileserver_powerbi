@@ -44,3 +44,15 @@ $env:HTTP_PROXY = "http://username:password@proxyserver:port"
 $env:HTTPS_PROXY = "http://username:password@proxyserver:port"
 
 pip install --proxy http://username:password@proxyserver:port package_name
+
+
+
+import pymongo
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["mydatabase"]
+mycol = mydb["customers"]
+
+mydict = { "name": "John", "address": "Highway 37" }
+
+x = mycol.insert_one(mydict)
