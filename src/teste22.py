@@ -1,8 +1,6 @@
-
 import os
 from datetime import datetime
 import pymongo
-
 
 def obter_atributos_arquivo(caminho_completo):
     try:
@@ -23,16 +21,16 @@ def obter_atributos_arquivo(caminho_completo):
             atributos['Tipo'] = 'Arquivo'
 
         return atributos
-    except PermissionError:
-        arquivos_acesso_negado.append(caminho_completo)
+    except Exception as e:
+        print(f"Erro ao processar arquivo {caminho_completo}: {e}")
         return None  # ou outra estratégia de tratamento de erro
 
 
 def percorrer_diretorio_recursivamente(diretorio):
     try:
-        for pasta_atual, sub_pastas, arquivos in os.walk(diretorio):
-            for nome_arquivo in arquivos:
-                caminho_completo = os.path.join(pasta_atual, nome_arquivo)
+        for pasta_atual, sub_itens, _ in os.walk(diretorio):
+            for sub_item in sub_itens:
+                caminho_completo = os.path.join(pasta_atual, sub_item)
                 atributos = obter_atributos_arquivo(caminho_completo)
 
                 # Calculando a idade do arquivo (em dias)
@@ -55,8 +53,6 @@ def inserir_no_mongodb(documento):
     # Inserir o documento no MongoDB
     mycol.insert_one(documento)
 
-
-
 if __name__ == '__main__':
     # Substitua 'C:\caminho\para\o\diretorio' pelo caminho do seu diretório principal
     dh_inicio = datetime.now()
@@ -67,15 +63,11 @@ if __name__ == '__main__':
     mydb = myclient["file_server"]
     mycol = mydb["files2"]
 
-    diretorio_principal = r'J:\ARQUIVOS PUBLICOS'        
+    diretorio_principal = r'J:\ARQUIVOS PUBLICOS\DF'        
     percorrer_diretorio_recursivamente(diretorio_principal)
 
     dh_fim = datetime.now()
 
     dhdif = (dh_fim - dh_inicio).total_seconds() / 60.0
 
-    print(f"A extração dos metadados dureou: {dhdif} minutos" )
-
-
-
-
+    print(f"A extração dos metadados dureou: {dhdif} minutos")
